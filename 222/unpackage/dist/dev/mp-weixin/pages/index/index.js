@@ -61,6 +61,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -69,24 +72,25 @@ var _default =
       tip: '选择文字样式',
       boll: [{
         size: '小',
-        bc: '透明',
+        bc: '红',
         id: 1 },
       {
         size: '中',
-        bc: '白',
+        bc: '蓝',
         id: 2 },
       {
         size: '大',
-        bc: '黑',
+        bc: '绿',
         id: 3 }],
 
       flag: false,
       txt: '',
       styleCss: {
-        top: 0,
-        left: 0,
+        top: 100,
+        left: 150,
         font: '25px',
-        color: '#f40' },
+        color: '#000',
+        bcColor: '#ffffff' },
 
       startx: 0,
       starty: 0,
@@ -95,44 +99,68 @@ var _default =
 
   },
   onLoad: function onLoad() {
-
+    if (this.txt) {
+      return;
+    }
+    this.flag = true;
   },
+  computed: {},
+
+
   methods: {
-    changeColor: function changeColor() {
-      console.log(123);
+    changeColor: function changeColor(e) {
+      var id = e.currentTarget.dataset.id;
+      if (id === "1") {
+        this.styleCss.color = '#fff';
+        console.log(123);
+      } else if (id === "2") {
+        this.styleCss.color = '#f40';
+      } else if (id === "3") {
+        this.styleCss.color = '#000';
+      } else if (id === "4") {
+        this.styleCss.color = 'pink';
+      } else if (id === "5") {
+        this.styleCss.color = 'yellow';
+      }
+
     },
     start: function start(e) {
       this.startx = e.changedTouches[0].clientX - e.currentTarget.offsetLeft;
       this.starty = e.changedTouches[0].clientY - e.currentTarget.offsetTop;
-
     },
     move: function move(e) {
-      console.log('move');
-      console.log(e);
       this.disX = e.changedTouches[0].clientX - this.startx;
       this.disY = e.changedTouches[0].clientY - this.starty;
-      console.log(this.disX, this.disY);
+      // console.log(this.disX, this.disY)
       this.styleCss.top = this.disY + 'px';
       this.styleCss.left = this.disX + 'px';
     },
-    end: function end(e) {
-      console.log('end');
-      // console.log(this.styleCss)
-    },
-    addtxt: function addtxt() {
-      // if(this.txt) {
-      // 	return
-      // }
-
-
-      // this.styleCss.top = Math.random()*100
-      // this.styleCss.left = Math.random()*100
-      this.flag = true;
-    },
+    end: function end(e) {},
     losefocurs: function losefocurs(e) {
       this.txt = e.target.value;
-      this.flag = false;
-
+    },
+    handSizeClick: function handSizeClick(e) {
+      var id = e.currentTarget.dataset.id;
+      if (id === 1) {
+        this.styleCss.font = '15px';
+      } else if (id === 2) {
+        this.styleCss.font = '30px';
+      } else if (id === 3) {
+        this.styleCss.font = '45px';
+      }
+    },
+    handColorClick: function handColorClick(e) {
+      var id = e.currentTarget.dataset.id;
+      if (id === 1) {
+        this.styleCss.bcColor = 'red';
+      } else if (id === 2) {
+        this.styleCss.bcColor = 'blue';
+      } else if (id === 3) {
+        this.styleCss.bcColor = 'green';
+      }
+    },
+    handleInput: function handleInput() {
+      console.log(123);
     } } };exports.default = _default;
 
 /***/ }),

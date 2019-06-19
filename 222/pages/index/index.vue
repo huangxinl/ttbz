@@ -1,51 +1,54 @@
 <template>
 	<view class="banner">
+			<!-- 	<p style="font-family:ZoomlaXingtiJ2; "> </p> -->
 		<!-- 		<view class="head">
 			<text class="back iconfont"></text>
 			<text class="title">{{title}}</text>
 		</view> -->
-		<view class="box">
+		<!-- 	<view class="box">
 			<text class="edit  bg-orange">单击此处编辑文字</text>
+		</view> -->
+		<view class="picture">
+			<image src="../../static/horse.png" mode=""></image>
 		</view>
 		<view class="select">
-			<text class="tip">{{tip}}</text>
+			<text class="tip" style="font-family:ZoomlaXingtiJ2;">{{tip}}</text>
 		</view>
 		<view class="content">
-			<view class="text">
+			<view class="text" style="font-family:ZoomlaXingtiJ2;">
 				字体大小
-				<text class="boll" v-for="(item,index) in boll" :key="index">{{item.size}}</text>
+				<text class="boll" v-for="(item,index) in boll" @click="handSizeClick" :key="index" :data-id="item.id">{{item.size}}</text>
 			</view>
-			<view class="text">
+			<view class="text" style="font-family:ZoomlaXingtiJ2;">
 				背景颜色
-				<text class="boll" v-for="(item,index) in boll" :key="index">{{item.bc}}</text>
+				<text class="boll" v-for="(item,index) in boll" @click="handColorClick" :key="index" :data-id="item.id">{{item.bc}}</text>
 			</view>
 			<view class="container">
-				<view class="text-color">
+				<view class="text-color" style="font-family:ZoomlaXingtiJ2;">
 					字体颜色
 				</view>
 				<view class="cont">
 					<view class="action">
-						<view @click="changeColor" class="cu-tag round bg-orange light">文</view>
-						<view class="cu-tag round bg-olive  light">文</view>
+						<view data-id="1" @click="changeColor" class="cu-tag round bg-orange light" style="font-family:ZoomlaXingtiJ2;">白</view>
+						<view data-id="2" @click="changeColor" class="cu-tag round bg-olive  light" style="font-family:ZoomlaXingtiJ2;">红</view>
+						<view data-id="3" @click="changeColor" class="cu-tag round bg-blue light" style="font-family:ZoomlaXingtiJ2;">黑</view>
+						<view data-id="4" @click="changeColor" class="cu-tag round bg-orange light" style="font-family:ZoomlaXingtiJ2;">粉</view>
+						<view data-id="5" @click="changeColor" class="cu-tag round bg-olive light" style="font-family:ZoomlaXingtiJ2;">黄</view>
+						<!-- 				<view class="cu-tag round bg-blue light">文</view>
+						<view class="cu-tag round bg-orange light">文</view> -->
+						<!-- 		<view class="cu-tag round bg-olive light">文</view>
 						<view class="cu-tag round bg-blue light">文</view>
 						<view class="cu-tag round bg-orange light">文</view>
 						<view class="cu-tag round bg-olive light">文</view>
-						<view class="cu-tag round bg-blue light">文</view>
-						<view class="cu-tag round bg-orange light">文</view>
-						<view class="cu-tag round bg-olive light">文</view>
-						<view class="cu-tag round bg-blue light">文</view>
-						<view class="cu-tag round bg-orange light">文</view>
-						<view class="cu-tag round bg-olive light">文</view>
-						<view class="cu-tag round bg-blue light">文</view>
+						<view class="cu-tag round bg-blue light">文</view> -->
 					</view>
 				</view>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-grey lg" @click="addtxt">新增文本框</button>
-				<button class="cu-btn bg-red margin-tb-sm lg">生成表情</button>
+				<button class="cu-btn bg-red margin-tb-sm lg" style="font-family:ZoomlaXingtiJ2;">生成表情</button>
 			</view>
-			<input type="text" class="txt-input" value="" placeholder="请输入文本" v-show="flag" @touchstart="start" @touchmove="move"
-			 @touchend="end" @blur="losefocurs" :style="{top:styleCss.top,left:styleCss.left,fontSize:styleCss.font,color:styleCss.color}" />
+			<input type="text"  class="txt-input" value="" v-show="flag" @touchstart="start" @touchmove="move" style="font-family:ZoomlaXingtiJ2;"
+			 @change="handleInput" @touchend="end" @longtap="losefocurs" :style="{top:styleCss.top,left:styleCss.left,fontSize:styleCss.font,color:styleCss.color,background:styleCss.bcColor}" />
 			<text class="txt" :style="{top:styleCss.top,left:styleCss.left,fontSize:styleCss.font,color:styleCss.color}">{{txt}}</text>
 		</view>
 	</view>
@@ -59,24 +62,25 @@
 				tip: '选择文字样式',
 				boll: [{
 					size: '小',
-					bc: '透明',
+					bc: '红',
 					id: 1
 				}, {
 					size: '中',
-					bc: '白',
+					bc: '蓝',
 					id: 2
 				}, {
 					size: '大',
-					bc: '黑',
+					bc: '绿',
 					id: 3
 				}],
 				flag: false,
 				txt: '',
 				styleCss: {
-					top: 0,
-					left: 0,
+					top: 100,
+					left: 150,
 					font: '25px',
-					color: '#f40'
+					color: '#000',
+					bcColor: '#ffffff'
 				},
 				startx: 0,
 				starty: 0,
@@ -85,50 +89,87 @@
 			}
 		},
 		onLoad() {
+			if (this.txt) {
+				return
+			}
+			this.flag = true
+		},
+		computed: {
 
 		},
 		methods: {
-			changeColor() {
-				console.log(123)
+			changeColor(e) {
+				var id = e.currentTarget.dataset.id
+				if (id === "1") {
+					this.styleCss.color = '#fff'
+					console.log(123)
+				} else if (id === "2") {
+					this.styleCss.color = '#f40'
+				} else if (id === "3") {
+					this.styleCss.color = '#000'
+				} else if (id === "4") {
+					this.styleCss.color = 'pink'
+				} else if (id === "5") {
+					this.styleCss.color = 'yellow'
+				}
+
 			},
 			start(e) {
 				this.startx = e.changedTouches[0].clientX - e.currentTarget.offsetLeft
 				this.starty = e.changedTouches[0].clientY - e.currentTarget.offsetTop
-
 			},
 			move(e) {
-				console.log('move')
-				console.log(e)
 				this.disX = e.changedTouches[0].clientX - this.startx
 				this.disY = e.changedTouches[0].clientY - this.starty
-				console.log(this.disX, this.disY)
+				// console.log(this.disX, this.disY)
 				this.styleCss.top = this.disY + 'px'
 				this.styleCss.left = this.disX + 'px'
 			},
-			end(e) {
-				console.log('end')
-				// console.log(this.styleCss)
-			},
-			addtxt() {
-				// if(this.txt) {
-				// 	return
-				// }
-
-
-				// this.styleCss.top = Math.random()*100
-				// this.styleCss.left = Math.random()*100
-				this.flag = true
-			},
+			end(e) {},
 			losefocurs(e) {
 				this.txt = e.target.value
-				this.flag = false
-			
 			},
+			handSizeClick(e) {
+				var id = e.currentTarget.dataset.id
+				if (id === 1) {
+					this.styleCss.font = '15px'
+				} else if (id === 2) {
+					this.styleCss.font = '30px'
+				} else if (id === 3) {
+					this.styleCss.font = '45px'
+				}
+			},
+			handColorClick(e) {
+				var id = e.currentTarget.dataset.id
+				if (id === 1) {
+					this.styleCss.bcColor = 'red'
+				} else if (id === 2) {
+					this.styleCss.bcColor = 'blue'
+				} else if (id === 3) {
+					this.styleCss.bcColor = 'green'
+				}
+			},
+			handleInput() {
+				console.log(123)
+			}
 		}
 	}
 </script>
 
 <style>
+ @font-face{font-family:'ZoomlaXingtiJ2';
+        src: url('https://code.z01.com/font/ZoomlaXingtiJ2.eot?#iefix'); /* IE9 */
+        src: url('https://code.z01.com/font/ZoomlaXingtiJ2.eot?#iefix') format("embedded-opentype"), /* IE6-IE8 */
+        url('https://code.z01.com/font/ZoomlaXingtiJ2.woff') format("woff"), /* chrome、firefox */
+        url('https://code.z01.com/font/ZoomlaXingtiJ2.ttf') format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
+        url('https://code.z01.com/font/ZoomlaXingtiJ2.svg#ZoomlaXingtiJ2') format("svg"); /* iOS 4.1- */
+        font-style: normal; font-weight: normal;
+		}
+
+	.banner {
+		position: relative;
+	}
+
 	.back::before {
 		content: '<';
 
@@ -226,20 +267,21 @@
 	}
 
 	.txt-input {
-		width: 50%;
 		position: absolute;
-		top: 40upx;
-		left: 80upx;
-		padding: 10upx;
 		border-radius: 15upx;
-		border: 1px solid #007AFF;
-		color: #ffff;
+		background: #fff;
 	}
-	
+
 	.txt {
 		position: absolute;
 		padding: 10upx;
-		color: #ffff
 	}
-	
+
+	.picture {
+		text-align: center;
+	}
+
+	/* 	image {
+		margin: 0 auto;
+	} */
 </style>
