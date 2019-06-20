@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -68,11 +68,14 @@ var _default =
 {
   data: function data() {
     return {
+      idd: 0,
+      width: '100px',
+      height: '30px',
       title: '表情加字',
       tip: '选择文字样式',
       boll: [{
         size: '小',
-        bc: '红',
+        bc: '透明',
         id: 1 },
       {
         size: '中',
@@ -99,15 +102,55 @@ var _default =
 
   },
   onLoad: function onLoad() {
+
     if (this.txt) {
       return;
     }
     this.flag = true;
+    // uni.chooseImage({
+    // 	success: function(res) {
+    // 		console.log(111)
+    // 		var tempFilePaths = res.tempFilePaths;
+    // 		uni.saveFile({
+    // 			tempFilePath: tempFilePaths[0],
+    // 			success: function(res) {
+    // 				var savedFilePath = res.savedFilePath;
+    // 			}
+    // 		});
+    // 	}
+    // });
+
+    uni.downloadFile({
+      url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561024022205&di=53f2f664c37a9de7b608cc556b27e634&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg', //仅为示例，并非真实的资源
+      success: function success(res) {
+        if (res.statusCode === 200) {
+          console.log(res);
+          console.log('下载成功');
+        }
+      } });
+
   },
-  computed: {},
-
-
   methods: {
+    handleKeUp: function handleKeUp(e) {
+      var i = this.idd;
+      this.changeInput(i, e);
+    },
+    changeInput: function changeInput(i, e) {
+
+      if (i === 1) {
+        var fontone = e.detail.value.length * 17 + 'px';
+        this.width = fontone;
+        this.height = '30px';
+      } else if (i === 2) {
+        var fontone = e.detail.value.length * 32 + 'px';
+        this.width = fontone;
+        this.height = '45px';
+      } else if (i === 3) {
+        var fontone = e.detail.value.length * 47 + 'px';
+        this.width = fontone;
+        this.height = '65px';
+      }
+    },
     changeColor: function changeColor(e) {
       var id = e.currentTarget.dataset.id;
       if (id === "1") {
@@ -125,6 +168,7 @@ var _default =
 
     },
     start: function start(e) {
+
       this.startx = e.changedTouches[0].clientX - e.currentTarget.offsetLeft;
       this.starty = e.changedTouches[0].clientY - e.currentTarget.offsetTop;
     },
@@ -136,23 +180,28 @@ var _default =
       this.styleCss.left = this.disX + 'px';
     },
     end: function end(e) {},
-    losefocurs: function losefocurs(e) {
-      this.txt = e.target.value;
-    },
+    // losefocurs(e) {
+    // 	this.txt = e.target.value
+    // },
     handSizeClick: function handSizeClick(e) {
       var id = e.currentTarget.dataset.id;
+      this.idd = id;
+      console.log(this.idd);
       if (id === 1) {
         this.styleCss.font = '15px';
+        this.height = '30px';
       } else if (id === 2) {
         this.styleCss.font = '30px';
+        this.height = '45px';
       } else if (id === 3) {
         this.styleCss.font = '45px';
+        this.height = '65px';
       }
     },
     handColorClick: function handColorClick(e) {
       var id = e.currentTarget.dataset.id;
       if (id === 1) {
-        this.styleCss.bcColor = 'red';
+        this.styleCss.bcColor = 'transparent';
       } else if (id === 2) {
         this.styleCss.bcColor = 'blue';
       } else if (id === 3) {
@@ -162,6 +211,7 @@ var _default =
     handleInput: function handleInput() {
       console.log(123);
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
