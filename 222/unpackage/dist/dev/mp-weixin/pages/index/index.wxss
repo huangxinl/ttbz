@@ -132,4 +132,10 @@
 /* 	image {
 	margin: 0 auto;
 } */
+.active{
+	background: #0081FF;
+}
+.light {
+	background: #1CBBB4;
+}
 

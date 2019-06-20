@@ -1,51 +1,47 @@
 <template>
 	<view class="banner">
-		<!-- 	<p style="font-family:ZoomlaXingtiJ2; "> </p> -->
-		<!-- 		<view class="head">
-			<text class="back iconfont"></text>
-			<text class="title">{{title}}</text>
-		</view> -->
-		<!-- 	<view class="box">
-			<text class="edit  bg-orange">单击此处编辑文字</text>
-		</view> -->
-		<view class="picture">
+	<avatar 
+        selWidth="200px" selHeight="400upx" @upload="myUpload" :avatarSrc="url"
+        avatarStyle="width: 100%; height: 250px; border-radius:0 ">
+    </avatar>
+<!-- 		<view class="picture">
 			<image src="../../static/horse.png" mode=""></image>
-		</view>
+		</view> -->
 		<view class="select">
-			<text class="tip" style="font-family:ZoomlaXingtiJ2;">{{tip}}</text>
+			<text class="tip" >{{tip}}</text>
 		</view>
 		<view class="content">
-			<view class="text" style="font-family:ZoomlaXingtiJ2;">
+			<view class="text">
 				字体大小
-				<text class="boll" v-for="(item,index) in boll" @click="handSizeClick" :key="index" :data-id="item.id">{{item.size}}</text>
+				<text :class="['boll',{'active': index+1 === idd}]"  v-for="(item,index) in boll" @click="handSizeClick" :key="index" :data-id="item.id">{{item.size}}</text>
 			</view>
-			<view class="text" style="font-family:ZoomlaXingtiJ2;">
+			<view class="text" >
 				背景颜色
-				<text class="boll" v-for="(item,index) in boll" @click="handColorClick" :key="index" :data-id="item.id">{{item.bc}}</text>
+				<text :class="['boll',{'light': index+1 === colorId}]" v-for="(item,index) in boll" @click="handColorClick" :key="index" :data-id="item.id">{{item.bc}}</text>
 			</view>
 			<view class="container">
-				<view class="text-color" style="font-family:ZoomlaXingtiJ2;">
+				<view class="text-color" >
 					字体颜色
 				</view>
 				<view class="cont">
 					<view class="action">
-						<view data-id="1" @click="changeColor" class="cu-tag round bg-orange light" style="font-family:ZoomlaXingtiJ2;">白</view>
-						<view data-id="2" @click="changeColor" class="cu-tag round bg-olive  light" style="font-family:ZoomlaXingtiJ2;">红</view>
-						<view data-id="3" @click="changeColor" class="cu-tag round bg-blue light" style="font-family:ZoomlaXingtiJ2;">黑</view>
-						<view data-id="4" @click="changeColor" class="cu-tag round bg-orange light" style="font-family:ZoomlaXingtiJ2;">粉</view>
-						<view data-id="5" @click="changeColor" class="cu-tag round bg-olive light" style="font-family:ZoomlaXingtiJ2;">黄</view>
-						<!-- 				<view class="cu-tag round bg-blue light">文</view>
-						<view class="cu-tag round bg-orange light">文</view> -->
-						<!-- 		<view class="cu-tag round bg-olive light">文</view>
-						<view class="cu-tag round bg-blue light">文</view>
-						<view class="cu-tag round bg-orange light">文</view>
-						<view class="cu-tag round bg-olive light">文</view>
-						<view class="cu-tag round bg-blue light">文</view> -->
+						<view data-id="1" @click="changeColor" class="cu-tag round bg-orange light" >白</view>
+						<view data-id="2" @click="changeColor" class="cu-tag round bg-olive  light" >红</view>
+						<view data-id="3" @click="changeColor" class="cu-tag round bg-blue light" >黑</view>
+						<view data-id="4" @click="changeColor" class="cu-tag round bg-orange light">粉</view>
+						<view data-id="5" @click="changeColor" class="cu-tag round bg-olive light" >黄</view>
+						<view data-id="6" @click="changeColor" class="cu-tag round bg-blue light">文</view>
+						<view data-id="7" @click="changeColor" class="cu-tag round bg-orange light">文</view> 
+						<view data-id="8" @click="changeColor" class="cu-tag round bg-olive light">文</view>
+						<view data-id="9" @click="changeColor" class="cu-tag round bg-blue light">文</view>
+						<view data-id="10" @click="changeColor" class="cu-tag round bg-orange light">文</view>
+						<view data-id="11" @click="changeColor" class="cu-tag round bg-olive light">文</view>
+						<view data-id="12" @click="changeColor" class="cu-tag round bg-blue light">文</view>
 					</view>
 				</view>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-red margin-tb-sm lg" style="font-family:ZoomlaXingtiJ2;">生成表情</button>
+				<button class="cu-btn bg-red margin-tb-sm lg" >生成表情</button>
 			</view>
 			<input type="text" class="txt-input" v-show="flag" @touchstart="start" @touchmove="move" @input="handleKeUp"
 			 @touchend="end" :style="{height,width,top:styleCss.top,left:styleCss.left,fontSize:styleCss.font,color:styleCss.color,background:styleCss.bcColor}" />
@@ -55,9 +51,15 @@
 </template>
 
 <script>
+	import avatar from "../../components/yq-avatar/yq-avatar.vue";
 	export default {
+		components: {
+		  avatar
+		},
 		data() {
 			return {
+				colorId: 0,
+				url: "../../static/horse.png",
 				idd: 0,
 				width: '100px',
 				height: '30px',
@@ -110,23 +112,27 @@
 			// 	}
 			// });
 			
-uni.downloadFile({
-    url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561024022205&di=53f2f664c37a9de7b608cc556b27e634&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg', //仅为示例，并非真实的资源
-    success: function (res) {
-        if (res.statusCode === 200) {
-			console.log(res)
-            console.log('下载成功');
-        }
-    }
-})
+// uni.downloadFile({
+//     url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561024022205&di=53f2f664c37a9de7b608cc556b27e634&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg', //仅为示例，并非真实的资源
+//     success: function (res) {
+//         if (res.statusCode === 200) {
+// 			console.log(res)
+//             console.log('下载成功');
+//         }
+//     }
+// })
 		},
 		methods: {
+			 myUpload(rsp) {
+                this.url = rsp.path; //更新头像方式一
+                //rsp.avatar.imgSrc = rsp.path; //更新头像方式二
+            },
 			handleKeUp(e) {
 				let i = this.idd
 				this.changeInput(i, e)
 			},
 			changeInput(i, e) {
-
+				
 				if (i === 1) {
 					var fontone = e.detail.value.length * 17 + 'px'
 					this.width = fontone
@@ -149,11 +155,25 @@ uni.downloadFile({
 				} else if (id === "2") {
 					this.styleCss.color = '#f40'
 				} else if (id === "3") {
-					this.styleCss.color = '#000'
+					this.styleCss.color = 'green'
 				} else if (id === "4") {
 					this.styleCss.color = 'pink'
 				} else if (id === "5") {
 					this.styleCss.color = 'yellow'
+				} else if (id === "6") {
+					this.styleCss.color = '#1b53d4'
+				} else if (id === "7") {
+					this.styleCss.color = '#55bd39'
+				} else if (id === "8") {
+					this.styleCss.color = '#b15f5e'
+				}else if (id === "9") {
+					this.styleCss.color = '#d23cc8'
+				} else if (id === "10") {
+					this.styleCss.color = 'blue'
+				} else if (id === "11") {
+					this.styleCss.color = '#787979'
+				} else if (id === "12") {
+					this.styleCss.color = '#4145'
 				}
 
 			},
@@ -174,6 +194,7 @@ uni.downloadFile({
 			// 	this.txt = e.target.value
 			// },
 			handSizeClick(e) {
+				this.key = true
 				var id = e.currentTarget.dataset.id
 				this.idd = id
 				console.log(this.idd)
@@ -190,6 +211,9 @@ uni.downloadFile({
 			},
 			handColorClick(e) {
 				var id = e.currentTarget.dataset.id
+				console.log(id)
+				this.colorId = id
+				console.log(this.colorId)
 				if (id === 1) {
 					this.styleCss.bcColor = 'transparent'
 				} else if (id === 2) {
@@ -344,4 +368,10 @@ uni.downloadFile({
 	/* 	image {
 		margin: 0 auto;
 	} */
+	.active{
+		background: #0081FF;
+	}
+	.light {
+		background: #1CBBB4;
+	}
 </style>
