@@ -1,21 +1,22 @@
 
 @font-face {
-	font-family: 'ZoomlaXingtiJ2';
-	src: url('https://code.z01.com/font/ZoomlaXingtiJ2.eot?#iefix');
+	font-family: 'ZoomlaXingtiJ';
+	src: url('https://code.z01.com/font/ZoomlaXingtiJ.eot?#iefix');
 	/* IE9 */
-	src: url('https://code.z01.com/font/ZoomlaXingtiJ2.eot?#iefix') format("embedded-opentype"),
+	src: url('https://code.z01.com/font/ZoomlaXingtiJ.eot?#iefix') format("embedded-opentype"),
 		/* IE6-IE8 */
-		url('https://code.z01.com/font/ZoomlaXingtiJ2.woff') format("woff"),
+		url('https://code.z01.com/font/ZoomlaXingtiJ.woff') format("woff"),
 		/* chrome、firefox */
-		url('https://code.z01.com/font/ZoomlaXingtiJ2.ttf') format("truetype"),
+		url('https://code.z01.com/font/ZoomlaXingtiJ.ttf') format("truetype"),
 		/* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
-		url('https://code.z01.com/font/ZoomlaXingtiJ2.svg#ZoomlaXingtiJ2') format("svg");
+		url('https://code.z01.com/font/ZoomlaXingtiJ.svg#ZoomlaXingtiJ') format("svg");
 	/* iOS 4.1- */
 	font-style: normal;
 	font-weight: normal;
 }
 .banner {
-	position: relative;
+	width: 100%;
+	overflow: hidden;
 }
 .back::before {
 	content: '<';
@@ -111,13 +112,13 @@
 	margin: 0 20rpx 20rpx;
 }
 .txt-input {
-	position: absolute;
-	top: 205px;
-	left: 145px;
+	max-width: 300px;
+	font-family: ZoomlaXingtiJ;
 	-webkit-border-radius: 15rpx;
 	        border-radius: 15rpx;
 	background: #fff;
 	text-align: center;
+/* 	border: 1px solid #fff; */
 }
 
 /* 	.txt {
@@ -132,10 +133,29 @@
 /* 	image {
 	margin: 0 auto;
 } */
-.active{
+.active {
 	background: #0081FF;
 }
 .light {
 	background: #1CBBB4;
+}
+.trag {
+	-webkit-border-radius: 15rpx;
+	        border-radius: 15rpx;
+	max-width: 300px;
+	position: absolute;
+	top: 20px;
+	left: 10px;
+	width: 100px;
+	height: 50px;
+	background: #1CBBB4;
+}
+.close {
+	position: absolute;
+	right: 3px;
+	top: 0px;
+	right: -5px;
+	top: -7px;
+	color: #F43F3B;
 }
 

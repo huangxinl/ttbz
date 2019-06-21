@@ -152,16 +152,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
 {
   components: {
     avatar: avatar },
 
   data: function data() {
     return {
+      str: "<text>45454</text>",
+      index: 1,
+      len: 0,
+      textInput: '',
       colorId: 0,
       url: "../../static/horse.png",
-      idd: 0,
-      width: '100px',
+      idd: 1,
+      width: '120px',
       height: '30px',
       title: '表情加字',
       tip: '选择文字样式',
@@ -171,11 +182,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         id: 1 },
       {
         size: '中',
-        bc: '蓝',
+        bc: '白',
         id: 2 },
       {
         size: '大',
-        bc: '绿',
+        bc: '黑',
         id: 3 }],
 
       flag: false,
@@ -183,7 +194,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       styleCss: {
         top: 100,
         left: 150,
-        font: '25px',
+        font: '15px',
         color: '#000',
         bcColor: '#ffffff' },
 
@@ -195,9 +206,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   onLoad: function onLoad() {
 
-    if (this.txt) {
-      return;
-    }
+
+
     this.flag = true;
     // uni.chooseImage({
     // 	success: function(res) {
@@ -228,53 +238,74 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       //rsp.avatar.imgSrc = rsp.path; //更新头像方式二
     },
     handleKeUp: function handleKeUp(e) {
+      if (e.detail.value.length === 0) {
+        e.detail.value = '     ';
+      }
+      this.textInput = e.target.value;
       var i = this.idd;
-      this.changeInput(i, e);
+      this.len = e.detail.value.length;
+      this.changeInput(i, this.len);
     },
-    changeInput: function changeInput(i, e) {
-
+    changeInput: function changeInput(i, len) {
+      this.changeWidth(i, len);
+    },
+    changeWidth: function changeWidth(i, len) {
       if (i === 1) {
-        var fontone = e.detail.value.length * 17 + 'px';
+        var fontone = len * 17 + 'px';
         this.width = fontone;
         this.height = '30px';
       } else if (i === 2) {
-        var fontone = e.detail.value.length * 32 + 'px';
+        var fontone = len * 32 + 'px';
         this.width = fontone;
         this.height = '45px';
       } else if (i === 3) {
-        var fontone = e.detail.value.length * 47 + 'px';
+        var fontone = len * 47 + 'px';
         this.width = fontone;
         this.height = '65px';
       }
     },
     changeColor: function changeColor(e) {
       var id = e.currentTarget.dataset.id;
-      if (id === "1") {
-        this.styleCss.color = '#fff';
-        console.log(123);
-      } else if (id === "2") {
-        this.styleCss.color = '#f40';
-      } else if (id === "3") {
-        this.styleCss.color = 'green';
-      } else if (id === "4") {
-        this.styleCss.color = 'pink';
-      } else if (id === "5") {
-        this.styleCss.color = 'yellow';
-      } else if (id === "6") {
-        this.styleCss.color = '#1b53d4';
-      } else if (id === "7") {
-        this.styleCss.color = '#55bd39';
-      } else if (id === "8") {
-        this.styleCss.color = '#b15f5e';
-      } else if (id === "9") {
-        this.styleCss.color = '#d23cc8';
-      } else if (id === "10") {
-        this.styleCss.color = 'blue';
-      } else if (id === "11") {
-        this.styleCss.color = '#787979';
-      } else if (id === "12") {
-        this.styleCss.color = '#4145';
-      }
+      id = JSON.parse(id);
+      switch (id) {
+        case 1:
+          this.styleCss.color = '#f40';
+          break;
+        case 2:
+          this.styleCss.color = '#F40';
+          break;
+        case 3:
+          this.styleCss.color = 'red';
+          break;
+        case 4:
+          this.styleCss.color = '#0C0';
+          break;
+        case 5:
+          this.styleCss.color = '#699';
+          break;
+        case 6:
+          this.styleCss.color = '#06C';
+          break;
+        case 7:
+          this.styleCss.color = '#909';
+          break;
+        case 8:
+          this.styleCss.color = '#fff';
+          break;
+        case 9:
+          this.styleCss.color = '#455';
+          break;
+        case 10:
+          this.styleCss.color = '#ccc';
+          break;
+        case 11:
+          this.styleCss.color = '#555';
+          break;
+        case 12:
+          this.styleCss.color = '#777';
+          break;
+        default:
+          this.styleCss.color = '#999';}
 
     },
     start: function start(e) {
@@ -290,14 +321,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.styleCss.left = this.disX + 'px';
     },
     end: function end(e) {},
-    // losefocurs(e) {
-    // 	this.txt = e.target.value
-    // },
+    losefocurs: function losefocurs(e) {
+      console.log(e);
+      // this.txt = e.target.value
+      this.handleKeUp(e);
+    },
     handSizeClick: function handSizeClick(e) {
       this.key = true;
       var id = e.currentTarget.dataset.id;
       this.idd = id;
-      console.log(this.idd);
       if (id === 1) {
         this.styleCss.font = '15px';
         this.height = '30px';
@@ -308,22 +340,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         this.styleCss.font = '45px';
         this.height = '65px';
       }
+      this.changeInput(this.idd, this.len);
     },
     handColorClick: function handColorClick(e) {
       var id = e.currentTarget.dataset.id;
-      console.log(id);
       this.colorId = id;
-      console.log(this.colorId);
       if (id === 1) {
         this.styleCss.bcColor = 'transparent';
       } else if (id === 2) {
-        this.styleCss.bcColor = 'blue';
+        this.styleCss.bcColor = '#fff';
       } else if (id === 3) {
-        this.styleCss.bcColor = 'green';
+        this.styleCss.bcColor = '#000';
       }
     },
-    handleInput: function handleInput() {
-      console.log(123);
+    handleCloseClick: function handleCloseClick() {
+      this.flag = !this.flag;
+    },
+    handleNewFace: function handleNewFace() {
+      this.index = 0;
+    },
+    addText: function addText() {
+
     } } };exports.default = _default;
 
 /***/ }),
