@@ -165,9 +165,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
-      str: "<text>45454</text>",
       index: 1,
-      len: 0,
       textInput: '',
       colorId: 0,
       url: "../../static/horse.png",
@@ -192,8 +190,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       flag: false,
       txt: '',
       styleCss: {
-        top: 100,
-        left: 150,
+        top: Math.random() * 100 + 'px',
+        left: Math.random() * 150 + 'px',
         font: '15px',
         color: '#000',
         bcColor: '#ffffff' },
@@ -205,32 +203,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   },
   onLoad: function onLoad() {
-
-
-
     this.flag = true;
-    // uni.chooseImage({
-    // 	success: function(res) {
-    // 		console.log(111)
-    // 		var tempFilePaths = res.tempFilePaths;
-    // 		uni.saveFile({
-    // 			tempFilePath: tempFilePaths[0],
-    // 			success: function(res) {
-    // 				var savedFilePath = res.savedFilePath;
-    // 			}
-    // 		});
-    // 	}
-    // });
-
-    // uni.downloadFile({
-    //     url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561024022205&di=53f2f664c37a9de7b608cc556b27e634&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F4034970a304e251fb1a2546da986c9177e3e53c9.jpg', //仅为示例，并非真实的资源
-    //     success: function (res) {
-    //         if (res.statusCode === 200) {
-    // 			console.log(res)
-    //             console.log('下载成功');
-    //         }
-    //     }
-    // })
   },
   methods: {
     myUpload: function myUpload(rsp) {
@@ -245,11 +218,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       var i = this.idd;
       this.len = e.detail.value.length;
       this.changeInput(i, this.len);
+      console.log(this.len);
     },
     changeInput: function changeInput(i, len) {
-      this.changeWidth(i, len);
-    },
-    changeWidth: function changeWidth(i, len) {
       if (i === 1) {
         var fontone = len * 17 + 'px';
         this.width = fontone;
@@ -275,7 +246,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           this.styleCss.color = '#F40';
           break;
         case 3:
-          this.styleCss.color = 'red';
+          this.styleCss.color = 'yellow';
           break;
         case 4:
           this.styleCss.color = '#0C0';
@@ -316,14 +287,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     move: function move(e) {
       this.disX = e.changedTouches[0].clientX - this.startx;
       this.disY = e.changedTouches[0].clientY - this.starty;
-      // console.log(this.disX, this.disY)
       this.styleCss.top = this.disY + 'px';
       this.styleCss.left = this.disX + 'px';
     },
     end: function end(e) {},
     losefocurs: function losefocurs(e) {
-      console.log(e);
-      // this.txt = e.target.value
       this.handleKeUp(e);
     },
     handSizeClick: function handSizeClick(e) {
@@ -341,6 +309,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         this.height = '65px';
       }
       this.changeInput(this.idd, this.len);
+
     },
     handColorClick: function handColorClick(e) {
       var id = e.currentTarget.dataset.id;
@@ -360,7 +329,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.index = 0;
     },
     addText: function addText() {
-
+      this.flag = !this.flag;
     } } };exports.default = _default;
 
 /***/ }),
