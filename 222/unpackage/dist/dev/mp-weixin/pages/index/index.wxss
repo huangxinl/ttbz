@@ -9,6 +9,24 @@
 	font-style: normal;
 	font-weight: normal;
 }
+.btn-wrap {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+}
+.selectimg {
+	width: 100%;
+}
 .banner {
 	width: 100%;
 	overflow: hidden;
@@ -87,11 +105,14 @@
 }
 .txt-input {
 	max-width: 300px;
-	font-family: ZoomlaXingtiJ;
+	font-family: ZoomlaXingtiJ!important;
 	-webkit-border-radius: 15rpx;
 	        border-radius: 15rpx;
 	background: #fff;
 	text-align: center;
+}
+.mytxt {
+	font-family: 'ZoomlaXingtiJ';
 }
 .picture {
 	text-align: center;

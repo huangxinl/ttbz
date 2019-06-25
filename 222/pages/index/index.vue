@@ -1,14 +1,16 @@
 <template>
 	<view class="banner">
-		<avatar selWidth="200px" selHeight="400upx" @upload="myUpload" :avatarSrc="url" avatarStyle="width: 100%; height: 220px; border-radius:0 ">
-		</avatar>
-		<!-- 		<view class="picture">
-			<image src="../../static/horse.png" mode=""></image>
-		</view> -->
-		<view class="cu-bar bg-white">
+		<!-- <avatar selWidth="200px" selHeight="400upx" @upload="myUpload" :avatarSrc="url" avatarStyle="width: 100%; height: 220px; border-radius:0 ">
+		</avatar> -->
+		<view style="text-align: center;">
+			<!-- <canvas style="width: 300px; height: 200px;" canvas-id="firstCanvas"></canvas> -->
+			<image :src="imgUrl" mode="" class="selectimg"></image>
+			<button class="mini-btn" type="default" size="mini" @click="chooseImage">更换背景图</button>
+		</view>
+		<view class="cu-bar bg-white" style="min-height: 0;">
 			<view class="action">
 				<text class="cuIcon-titles text-green"></text>
-				<text class="text-xl text-bold">{{tip}}</text>
+				<text style="padding: 5px 0;">{{tip}}</text>
 			</view>
 		</view>
 		<view class="content">
@@ -43,17 +45,18 @@
 					</view>
 				</view>
 			</view>
-			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-red margin-tb-sm lg" @click="handleNewFace">生成表情</button>
-				<button class="cu-btn bg-red margin-tb-sm lg" @click="addText">新增文本框</button>
+			<view class="btn-wrap">
+				<button class="mini-btn" type="primary" size="mini" @click="handleNewFace">生成</button>
+				<button class="mini-btn" type="default" size="mini" @click="addText">TEXT</button>
 			</view>
 			<view class="trag" :style="{top:styleCss.top,left:styleCss.left,height,width,background:styleCss.bcColor}"
 			 @touchstart="start" @touchmove="move" v-if="flag" @touchend="end">
 				<input type="text" class="txt-input" @blur="losefocurs" @input="handleKeUp" :style="{height,width,fontSize:styleCss.font,color:styleCss.color,background:styleCss.bcColor}" />
 				<text class="lg text-gray cuIcon-roundclosefill close" @click="handleCloseClick" v-show="index"></text>
 			</view>
-
+			<text class="mytxt">sadfasdf我阿嘎是啊是</text>
 		</view>
+	
 	</view>
 </template>
 
@@ -65,12 +68,13 @@
 		},
 		data() {
 			return {
+				imgUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561454443237&di=18794bc4b583a8f4c53b563eadbd66bf&imgtype=0&src=http%3A%2F%2Fimg3.cache.netease.com%2Fphoto%2F0001%2F2010-10-14%2F6IVN5LN300AQ0001.jpg',
 				index: 1,
 				textInput: '',
 				colorId: 0,
 				url: "../../static/horse.png",
 				idd: 1,
-				width: '120px',
+				width: '50px',
 				height: '30px',
 				title: '表情加字',
 				tip: '选择文字样式',
@@ -106,13 +110,16 @@
 			this.flag = true
 		},
 		methods: {
+			canvasIdErrorCallback: function(e) {
+				console.error(e.detail.errMsg)
+			},
 			myUpload(rsp) {
 				this.url = rsp.path; //更新头像方式一
 				//rsp.avatar.imgSrc = rsp.path; //更新头像方式二
 			},
 			handleKeUp(e) {
 				if (e.detail.value.length === 0) {
-					e.detail.value = '     '
+					e.detail.value = ' '
 				}
 				this.textInput = e.target.value
 				let i = this.idd
@@ -228,8 +235,20 @@
 			handleNewFace() {
 				this.index = 0
 			},
+			chooseImage() {
+				var that = this
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function(res) {
+						let url = JSON.stringify(res.tempFilePaths)
+						that.imgUrl = JSON.parse(url)[0]
+					}
+				});
+			},
 			addText() {
-				this.flag = !this.flag
+				
 			}
 		}
 	}
@@ -247,7 +266,14 @@
 		font-weight: normal;
 	}
 
-
+	.btn-wrap {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.selectimg {
+		width: 100%;
+	}
 
 	.banner {
 		width: 100%;
@@ -311,10 +337,10 @@
 	.cont {
 		flex: 1;
 	}
-	
+
 	.content {
 		padding: 20px 0 0;
-			
+
 	}
 
 	.cu-tag:nth-child(1) {
@@ -328,12 +354,15 @@
 
 	.txt-input {
 		max-width: 300px;
-		font-family: ZoomlaXingtiJ;
+		font-family: ZoomlaXingtiJ!important;
 		border-radius: 15upx;
 		background: #fff;
 		text-align: center;
 	}
-
+	
+	.mytxt {
+		font-family: 'ZoomlaXingtiJ';
+	}
 	.picture {
 		text-align: center;
 	}

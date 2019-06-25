@@ -98,7 +98,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var avatar = function avatar() {return Promise.all(/*! import() | components/yq-avatar/yq-avatar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/yq-avatar/yq-avatar")]).then(__webpack_require__.bind(null, /*! ../../components/yq-avatar/yq-avatar.vue */ "../../../ttbz/222/components/yq-avatar/yq-avatar.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var avatar = function avatar() {return Promise.all(/*! import() | components/yq-avatar/yq-avatar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/yq-avatar/yq-avatar")]).then(__webpack_require__.bind(null, /*! ../../components/yq-avatar/yq-avatar.vue */ "../../../ttbz/222/components/yq-avatar/yq-avatar.vue"));};var _default =
+
+
+
 
 
 
@@ -165,12 +168,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
+      imgUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561454443237&di=18794bc4b583a8f4c53b563eadbd66bf&imgtype=0&src=http%3A%2F%2Fimg3.cache.netease.com%2Fphoto%2F0001%2F2010-10-14%2F6IVN5LN300AQ0001.jpg',
       index: 1,
       textInput: '',
       colorId: 0,
       url: "../../static/horse.png",
       idd: 1,
-      width: '120px',
+      width: '50px',
       height: '30px',
       title: '表情加字',
       tip: '选择文字样式',
@@ -206,13 +210,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     this.flag = true;
   },
   methods: {
+    canvasIdErrorCallback: function canvasIdErrorCallback(e) {
+      console.error(e.detail.errMsg);
+    },
     myUpload: function myUpload(rsp) {
       this.url = rsp.path; //更新头像方式一
       //rsp.avatar.imgSrc = rsp.path; //更新头像方式二
     },
     handleKeUp: function handleKeUp(e) {
       if (e.detail.value.length === 0) {
-        e.detail.value = '     ';
+        e.detail.value = ' ';
       }
       this.textInput = e.target.value;
       var i = this.idd;
@@ -328,9 +335,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     handleNewFace: function handleNewFace() {
       this.index = 0;
     },
+    chooseImage: function chooseImage() {
+      var that = this;
+      uni.chooseImage({
+        count: 1, //默认9
+        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], //从相册选择
+        success: function success(res) {
+          var url = JSON.stringify(res.tempFilePaths);
+          that.imgUrl = JSON.parse(url)[0];
+        } });
+
+    },
     addText: function addText() {
-      this.flag = !this.flag;
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
